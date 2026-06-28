@@ -104,18 +104,15 @@ const SectionAtas = () => {
           </div>
           <div className="book-right">
             <div className="book-text">
-              <p>Selamat Ulang Tahun, Anjeni!</p>
+              <p>hi jenuuy!</p>
               <p>
-                Semoga hari spesialmu ini dipenuhi dengan tawa, kebahagiaan, dan kejutan-kejutan manis.
-                Terima kasih sudah menjadi teman yang luar biasa.
+                happy birthday to the most beautiful soul. i got lucky enough to have you, you've saved me more times than i can count and for that i'm eternally grateful to have you as my other half.
               </p>
               <p>
-                Semoga di usia yang baru ini, semua impianmu perlahan terwujud dan selalu dikelilingi
-                oleh orang-orang yang menyayangimu!
+                college life tastes sweeter with you in it. thank you for being the person i can have deep convo with but also laugh about the most dumb stuff.
               </p>
-              <p style={{ marginTop: '20px' }}>
-                With love,<br />
-                Temanmu
+              <p>
+                no matter how hard things gets, everything will be okay one day, you have me as your one call away &lt;3
               </p>
             </div>
           </div>

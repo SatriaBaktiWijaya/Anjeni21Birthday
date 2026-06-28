@@ -2,11 +2,11 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 
-const DraggableStar = ({ initialX, initialY, delay = 0, size = '45px' }) => {
+const DraggableStar = ({ initialX, initialY, delay = 0, size = '45px', constraintsRef }) => {
   return (
     <motion.div
       drag
-      dragConstraints={{ left: -400, right: 400, top: -300, bottom: 300 }}
+      dragConstraints={constraintsRef}
       whileDrag={{ scale: 1.2, cursor: "grabbing" }}
       style={{
         position: 'absolute',
@@ -37,6 +37,7 @@ const SectionBawah = () => {
   const [envelopeState, setEnvelopeState] = useState('closed'); // 'closed', 'unlocking', 'opened', 'revealed'
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const constraintsRef = useRef(null);
 
   const handleDragEnd = (event, info) => {
     setIsDragging(false);
@@ -122,18 +123,19 @@ const SectionBawah = () => {
   return (
     <motion.section
       className="section-bawah"
+      ref={constraintsRef}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
-      <DraggableStar initialX="10%" initialY="20%" delay={0} size="60px" />
-      <DraggableStar initialX="85%" initialY="15%" delay={0.5} size="50px" />
-      <DraggableStar initialX="5%" initialY="60%" delay={0.2} size="45px" />
-      <DraggableStar initialX="80%" initialY="70%" delay={0.8} size="55px" />
-      <DraggableStar initialX="20%" initialY="85%" delay={0.4} size="40px" />
-      <DraggableStar initialX="50%" initialY="10%" delay={1.2} size="48px" />
-      <DraggableStar initialX="70%" initialY="90%" delay={0.6} size="52px" />
+      <DraggableStar constraintsRef={constraintsRef} initialX="10%" initialY="20%" delay={0} size="60px" />
+      <DraggableStar constraintsRef={constraintsRef} initialX="85%" initialY="15%" delay={0.5} size="50px" />
+      <DraggableStar constraintsRef={constraintsRef} initialX="5%" initialY="60%" delay={0.2} size="45px" />
+      <DraggableStar constraintsRef={constraintsRef} initialX="80%" initialY="70%" delay={0.8} size="55px" />
+      <DraggableStar constraintsRef={constraintsRef} initialX="20%" initialY="85%" delay={0.4} size="40px" />
+      <DraggableStar constraintsRef={constraintsRef} initialX="50%" initialY="10%" delay={1.2} size="48px" />
+      <DraggableStar constraintsRef={constraintsRef} initialX="70%" initialY="90%" delay={0.6} size="52px" />
       
       <AnimatePresence mode="wait">
         {envelopeState !== 'revealed' && (
@@ -227,26 +229,58 @@ const SectionBawah = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           >
-            <img src="/assets/polaroid-collage.png" alt="Polaroid Collage" className="polaroid-img" />
-            
-            <div className="note-paper">
-              <img src="/assets/note-paper-right.png" alt="Note Paper" />
-              <div className="note-text">
-                <p>Hai Anjeni,</p>
-                <p>
-                  Semoga kejutan kecil ini bisa bikin kamu tersenyum di hari spesialmu! 
-                  Terima kasih ya sudah selalu ada dan jadi sahabat terbaik.
-                </p>
-                <p>
-                  Jangan pernah lelah buat ngejar apa yang kamu pengenin. 
-                  Ulang tahun kali ini, mari kita rayakan dengan suka cita!
-                </p>
-                <p style={{ marginTop: '20px' }}>
-                  Cheers, <br/>
-                  Teman Terbaikmu
-                </p>
+            {/* Left Polaroid Collage */}
+            <motion.div
+              className="polaroid-wrapper"
+              initial={{ opacity: 0, x: -40, zIndex: 2 }}
+              animate={{ opacity: 1, x: 0, zIndex: 2 }}
+              whileHover={{ zIndex: 10 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <img 
+                src="/assets/polaroid-collage.png" 
+                alt="Polaroid Collage" 
+                className="polaroid-img"
+              />
+            </motion.div>
+
+            {/* Right Group: Note Paper + Right Polaroids */}
+            <motion.div 
+              className="right-group-wrapper"
+              initial={{ opacity: 0, x: 40, zIndex: 3 }}
+              animate={{ opacity: 1, x: 0, zIndex: 3 }}
+              whileHover={{ zIndex: 10 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              <div className="right-group">
+                <div className="note-paper">
+                  <img src="/assets/note-paper-right.png" alt="Note Paper" />
+                  <div className="note-text">
+                    <p>
+                      thankyou for being such a light in my life, you deserve every single bit of happiness today and every day!
+                    </p>
+                    <p>
+                      hapiybisday dubai cuwi kuki ku :3
+                    </p>
+                  </div>
+                </div>
+
+                <div className="polaroid-stack">
+                  <motion.img 
+                    src="/assets/polaroid-new-left.png" 
+                    alt="Polaroid Top" 
+                    className="polaroid-stacked"
+                    whileHover={{ rotate: -2, scale: 1.08, zIndex: 10 }}
+                  />
+                  <motion.img 
+                    src="/assets/polaroid-new-right.png" 
+                    alt="Polaroid Bottom" 
+                    className="polaroid-stacked"
+                    whileHover={{ rotate: 2, scale: 1.08, zIndex: 10 }}
+                  />
+                </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
